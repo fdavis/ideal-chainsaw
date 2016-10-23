@@ -19,5 +19,25 @@ def list_users():
         html += '<br/>' + str(r)
     return html
 
+@app.route('/useradd/<username>')
+def add_user(username):
+    html = '<h1>adding: %s</h1>' % username
+    try:
+        conn.execute('INSERT INTO flask.users VALUES (%s, FALSE, FALSE)' % username)
+        res = '<h2>success</h2>'
+    except Exception as e:
+        res = '<h2>failure: ' + e.message + '</h2>'
+    return html + res
+
+@app.route('/userdel/<username>')
+def del_user(username):
+    html = '<h1>deleting: %s</h1>' % username
+    try:
+        conn.execute('DELETE FROM flask.users WHERE email = \'%s\'' % username)
+        res = '<h2>success</h2>'
+    except Exception as e:
+        res = '<h2>failure: ' + e.message + '</h2>'
+    return html + res
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
