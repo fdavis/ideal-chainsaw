@@ -23,7 +23,9 @@ def list_users():
 def add_user(username):
     html = '<h1>adding: %s</h1>' % username
     try:
-        conn.execute('INSERT INTO users VALUES (\'%s\', FALSE, FALSE)' % username)
+        r = conn.execute('INSERT INTO users VALUES (\'%s\', FALSE, FALSE)' % username)
+        if r.rowcount == 0:
+            raise ValueError('user %s was not created' % username)
         res = '<h2>success</h2>'
     except Exception as e:
         res = '<h2>failure: ' + e.message + '</h2>'
@@ -34,6 +36,8 @@ def del_user(username):
     html = '<h1>deleting: %s</h1>' % username
     try:
         conn.execute('DELETE FROM users WHERE email = \'%s\'' % username)
+        if r.rowcount == 0:
+            raise ValueError('user %s was not deleted' % username)
         res = '<h2>success</h2>'
     except Exception as e:
         res = '<h2>failure: ' + e.message + '</h2>'
