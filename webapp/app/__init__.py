@@ -35,7 +35,7 @@ def add_user(username):
 def del_user(username):
     html = '<h1>deleting: %s</h1>' % username
     try:
-        conn.execute('DELETE FROM users WHERE email = \'%s\'' % username)
+        r = conn.execute('DELETE FROM users WHERE email = \'%s\'' % username)
         if r.rowcount == 0:
             raise ValueError('user %s was not deleted' % username)
         res = '<h2>success</h2>'
