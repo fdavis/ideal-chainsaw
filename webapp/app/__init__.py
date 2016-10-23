@@ -23,7 +23,7 @@ def list_users():
 def add_user(username):
     html = '<h1>adding: %s</h1>' % username
     try:
-        conn.execute('INSERT INTO users VALUES (%s, FALSE, FALSE)' % username)
+        conn.execute('INSERT INTO users VALUES (\'%s\', FALSE, FALSE)' % username)
         res = '<h2>success</h2>'
     except Exception as e:
         res = '<h2>failure: ' + e.message + '</h2>'
